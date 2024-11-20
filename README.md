@@ -1,6 +1,11 @@
 # Install-RaylibN64
 This is a script that installs a complete version of raylib, libdragon, and raylib4Nintendo64
 
+I am also working on the following:
+* Custom rmodels.c implementation
+* Tiny3D support
+* Documentation
+
 ## Info
 this installs n64 support to `raylibdragon` in your home directory (`export N64_INST=$HOME/raylibdragon`)
 
