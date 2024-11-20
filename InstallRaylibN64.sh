@@ -33,15 +33,15 @@ function Install_Libdragon () {
 function Install_N64Support () {
   cd $HOME
   export N64_INST=$HOME/raylibdragon
-  git clone https://github.com/raylib4Consoles/raylib4Nintendo64.git
-  cd raylib4Nintendo64
 
-  if [ -d "raylib" ];
+  if [ -d "raylib4Nintendo64" ];
   then
   echo "Cleaning up exisiting files"
-  rm -Rf raylib
+  rm -Rf raylib4Nintendo64
   fi
 
+  git clone https://github.com/raylib4Consoles/raylib4Nintendo64.git
+  cd raylib4Nintendo64
   ./nintendo64build.sh
 
 }
