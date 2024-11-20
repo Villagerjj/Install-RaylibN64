@@ -4,28 +4,6 @@ set -e
 echo "This will install the Static version of Raylib, Libdragon, and N64 Support for Raylib in the root of your home directory"
 echo "This script COMPILES LIBDRAGON FROM SOURCE!! THIS WILL USE ~7 GB, and TAKE A LONG TIME!!! (~1 Hour)"
 
-function Install_Raylib () {
-  cd $HOME
-  echo "Installing Requirements"
-  sudo apt install build-essential git
-  sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
-
-  echo "Cloning the git repo"
-  if [ -d "raylib" ];
-  then
-  echo "Cleaning up exisiting files"
-  rm -Rf raylib
-  fi
-
-  git clone https://github.com/raysan5/raylib.git raylib
-  cd raylib/src/
-  #echo "Enabling OpenGL 1.1"
-  #line="GRAPHICS = GRAPHICS_API_OPENGL_11"
-  #sed -i "/${line}/ s/# *//" Makefile
-  make PLATFORM=PLATFORM_DESKTOP
-  sudo make install
-
-}
 
 function Install_Libdragon () {
   cd $HOME
@@ -33,6 +11,8 @@ function Install_Libdragon () {
 
   echo "Installing Requirements"
   sudo apt install texinfo
+  sudo apt install build-essential git
+  sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
 
   #wget https://github.com/DragonMinded/libdragon/releases/download/toolchain-continuous-prerelease/gcc-toolchain-mips64-x86_64.deb
 
@@ -42,7 +22,7 @@ function Install_Libdragon () {
   rm -Rf libdragon
   fi
 
-  git clone https://github.com/DragonMinded/libdragon.git --branch unstable
+  git clone https://github.com/DragonMinded/libdragon.git --branch preview
   cd libdragon/tools
   echo "Grab some popcorn, this is gonna take a while"
   bash ./build-toolchain.sh
@@ -69,15 +49,13 @@ function Install_N64Support () {
 read -r -p "Would you like to continue? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
 then
-    echo "Installing Raylib"
-    Install_Raylib
     echo "Installing Libdragon"
     Install_Libdragon
-    echo "Installing N64 Support into Raylib"
+    echo "Installing Raylib for N64"
     Install_N64Support
 
     echo "Test the example roms in an emulator like Ares, if they work, delete tools/toolchain in the libdragon folder"
-    echo "Btw, make sure to set your environment variable to this:"
+    echo "Btw, make sure to set your environment variable to this when compiling raylib stuff:"
     echo "export N64_INST=$HOME/raylibdragon"
 else
     echo "Buh Bye!"
